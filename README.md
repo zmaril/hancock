@@ -11,7 +11,7 @@ git clone https://github.com/zackmaril/hancock.git
 cd hancock
 git clone https://github.com/torvalds/linux.git artifacts/linux
 poetry install
-poetry run python hancock/main.py --repo artifacts/linux --output blobs/linux_functions.json
+poetry run python hancock/main.py --repo artifacts/linux --output blobs/linux_functions
 gzip blobs/linux_functions.json
 # should be about 5.7mb gzip, 80mb unzipped.
 ```
