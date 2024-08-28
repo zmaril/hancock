@@ -29,7 +29,7 @@ In flux. Right now it can dump out all the function signatures for a particular 
 
 Below is a chart of the size of the json blob for each linux kernel release as produced by the `hancock/main.py` script.
 
-![Size of JSON blob for each linux kernel release](./file_sizes_gzip.png)
+![Size of JSON blob for each linux kernel release](./chart.png)
 
 Easy to see that it gets bigger and bigger over time as the linux kernel grows. 
 

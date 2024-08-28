@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import glob
 import os
+import json
 
 def plot_file_sizes():
     # Get the file sizes
@@ -30,14 +31,6 @@ def plot_file_sizes():
     plt.ylabel('File Size (mb)')
     plt.xlabel('Linux Kernel Version ')
 
-    plt.title('Size of JSON blob of Signatures')
-    plt.tight_layout()
-
-    # do same for gzip
-
-    # Get the file sizes
-    file_sizes = {}
-    
     # Get the file sizes
     file_sizes = {}
     for file in glob.glob("./blobs/linux_functions/*.json.gz"):
@@ -50,12 +43,29 @@ def plot_file_sizes():
     file_sizes = dict(sorted(file_sizes.items(), key=lambda x: x[0]))
     
     plt.bar(file_sizes.keys(), file_sizes.values())
+    plt.legend(['Size of JSON blob', "Compressed"])
 
-    # add a legend
-    plt.legend(['Uncompressed', 'Compressed'])
+    # also plot the number of functions per version
+    num_functions = {}
+    for file in glob.glob("./blobs/linux_functions/*.json"):
+        major, minor, _ = file.split("/")[-1][1:].split(".")
+        #load the json file
+        with open(file, "r") as f:
+            data = json.load(f)
+        num_functions[major + "." + minor] = len(data)
+    # second y axis
+    ax2 = plt.twinx()
+    #sort the num_functions by the version number
+    num_functions = dict(sorted(num_functions.items(), key=lambda x: x[0]))
+    ax2.plot(num_functions.keys(), num_functions.values(), color='red')
+    ax2.set_ylabel('Number of Functions')
+
+    ax2.legend(['Number of Functions'], loc=1)
 
 
-    plt.savefig('file_sizes_gzip.png')
+    plt.title('Size of JSON blob of Signatures and Number of Functions per Version')
+    plt.tight_layout()
+    plt.savefig('chart.png')
     
 def get_stats():
     #Get total size of all the json blobs
