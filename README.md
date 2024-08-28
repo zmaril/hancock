@@ -6,6 +6,7 @@ A tool for finding and collating all of the function signatures in a git reposit
 
 ## Usage
 
+Make sure you have universal-ctags installed and in the PATH as `ctags`. 
 ```bash
 git clone https://github.com/zackmaril/hancock.git
 cd hancock
