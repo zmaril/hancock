@@ -24,6 +24,22 @@ gzip blobs/linux_functions.json
 
 In flux. Right now it can dump out all the function signatures for a particular tagged release of the linux kernel into json. Next up, I want to be able to produce  a json blob for all tagged releases and produce a unified index. The goal of bpfquery is to let you do adhoc queries on any linux kernel release, so I want to have a single json blob that contains all the function signatures for all releases and see how big that gets.
 
+# Notes
+
+Below is a chart of the size of the json blob for each linux kernel release as produced by the `hancock/main.py` script.
+
+![Size of JSON blob for each linux kernel release](./file_sizes_gzip.png)
+
+Easy to see that it gets bigger and bigger over time as the linux kernel grows. 
+
+* Total size of all the json blobs: 7,425 mb
+* Total size of all the json blobs compressed: 688 mb
+* Compression ratio: 9.2%
+
+688 mb is still pretty large, but it's only 9.2% of the original uncompressed size. If we compress all of the files together, then we get at most a reduction by 674 mb. So, all told, we're looking at a reduction of about 90% from the original 7,425 mb.
+
+Less than a GB isn't bad, and v3 of the kernel really is not used all that often anymore, so there is a fair amount of stuff to cut out at some point. If we are just going for kprobes, then we can cut even more I imagine, but it's difficult to know what is and isn't a kprobe ahead of time in fact. 
+
 ## License
 
 MIT
